@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>20</y>
       <width>431</width>
       <height>511</height>
      </rect>
@@ -40,7 +40,7 @@
      <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="Home">
      <widget class="QLabel" name="lblHome">
@@ -227,12 +227,35 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="REsults"/>
+    <widget class="QWidget" name="Results"/>
+    <widget class="QWidget" name="Search">
+     <widget class="QLabel" name="lblSearchTitle">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Search Records</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QPushButton" name="btnEnterNewRecord">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>20</x>
       <y>570</y>
       <width>121</width>
       <height>28</height>
@@ -240,6 +263,19 @@
     </property>
     <property name="text">
      <string>Enter New Record</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSearchRecords">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>570</y>
+      <width>121</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search Records</string>
     </property>
    </widget>
   </widget>

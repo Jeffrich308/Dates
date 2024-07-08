@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import (
 from PyQt5 import uic
 from datetime import date
 
-# from fileModule import *
+#from fileModule import *
 import sys
 import sqlite3
 
@@ -65,6 +65,7 @@ class UI(QMainWindow):
         self.btnExit = self.findChild(QPushButton, "btnExit")
         self.btnEnterNewRecord = self.findChild(QPushButton, "btnEnterNewRecord")
         self.btnSaveNewRecord = self.findChild(QPushButton, "btnSaveNewRecord")
+        self.btnSearchRecords = self.findChild(QPushButton, "btnSearchRecords")
 
         self.txtFirstName = self.findChild(QLineEdit, "txtFirstName")
         self.txtLastName = self.findChild(QLineEdit, "txtLastName")
@@ -88,6 +89,7 @@ class UI(QMainWindow):
         self.btnExit.clicked.connect(self.closeEvent)
         self.btnEnterNewRecord.clicked.connect(self.enter_new_record)
         self.btnSaveNewRecord.clicked.connect(self.write_to_db)
+        self.btnSearchRecords.clicked.connect(self.search_records)
         self.actExit.triggered.connect(self.closeEvent)
         self.cboEvent.currentIndexChanged.connect(self.death_date_status)
 
@@ -137,10 +139,11 @@ class UI(QMainWindow):
             self.lblEvent.setVisible(False)
         
         
-    def get_db_name(self):
-        print("Getting dB Name")
-        db_name = getFullFilename_db(self)
-        print(db_name)
+    def search_records(self):
+        print("Ready to search??")
+        self.stackedWidget.setCurrentWidget(self.Search)
+    
+
 
     def enter_new_record(self):
         self.stackedWidget.setCurrentWidget(self.Entry)
@@ -148,6 +151,7 @@ class UI(QMainWindow):
 
 
     def write_to_db(self):
+        # Setting up Variables
         fName = self.txtFirstName.text()
         print(fName)
         lName = self.txtLastName.text()
@@ -157,21 +161,19 @@ class UI(QMainWindow):
         birthDay = self.dtBirth.date().toString("MM-dd-yyyy")
         print(birthDay)
         if self.cboEvent.currentText() == "Death":
-            deathDay = self.dtBirth.date().toString("MM-dd-yyyy")
-         
+            deathDay = self.dtDeath.date().toString("MM-dd-yyyy")
         else:
             deathDay = "   "
         print(deathDay)
         if self.cboEvent.currentText() == "Anniversary":
             eventDay = self.dtEvent.date().toString("MM-dd-yyyy")
-            
         else:
             eventDay = "   "
         print(eventDay)
         event = self.cboEvent.currentText()
         print(event)
-
         
+        # Writing to dB
         conn = sqlite3.connect("Dates.db")  # Open dBase
         c = conn.cursor()  # Create Cursor
         # Write Data
@@ -180,6 +182,7 @@ class UI(QMainWindow):
         conn.commit()  # Save Write
         conn.close()  # Close connection
 
+        # Resetting boxes and return to home page
         self.txtFirstName.clear()
         self.txtLastName.clear()
         self.dtDeath.setVisible(False)
