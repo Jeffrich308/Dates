@@ -35,6 +35,7 @@ c = conn.cursor()
 
 command_create_table = """
                     CREATE TABLE IF NOT EXISTS people(
+                    id integer PRIMARY KEY,
                     firstname TEXT,
                     lastname TEXT,
                     DBirth TEXT,
@@ -188,6 +189,7 @@ class UI(QMainWindow):
          # Commit and Close dB
         conn.commit()
         conn.close()
+        self.txtSearchFirstName.clear()
 
 
     def write_to_db(self):
