@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>660</height>
+    <width>443</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,8 +31,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>431</width>
+      <y>10</y>
+      <width>421</width>
       <height>511</height>
      </rect>
     </property>
@@ -232,9 +232,9 @@
      <widget class="QLabel" name="lblSearchTitle">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>140</x>
         <y>10</y>
-        <width>111</width>
+        <width>131</width>
         <height>31</height>
        </rect>
       </property>
@@ -245,6 +245,78 @@
       </property>
       <property name="text">
        <string>Search Records</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Search by Last Name</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txtSearchLastName">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>70</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPlainTextEdit" name="txtResults">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>320</y>
+        <width>401</width>
+        <height>181</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txtSearchFirstName">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Search by First Name</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -284,7 +356,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>447</width>
+     <width>443</width>
      <height>26</height>
     </rect>
    </property>
@@ -303,6 +375,20 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>txtFirstName</tabstop>
+  <tabstop>txtLastName</tabstop>
+  <tabstop>cboEvent</tabstop>
+  <tabstop>dtBirth</tabstop>
+  <tabstop>dtDeath</tabstop>
+  <tabstop>dtEvent</tabstop>
+  <tabstop>btnSaveNewRecord</tabstop>
+  <tabstop>btnSearchRecords</tabstop>
+  <tabstop>txtSearchLastName</tabstop>
+  <tabstop>txtResults</tabstop>
+  <tabstop>btnEnterNewRecord</tabstop>
+  <tabstop>btnExit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -18,7 +18,8 @@ from PyQt5.QtWidgets import (
     QLabel,
     QStackedWidget,
     QDateEdit,
-    QComboBox
+    QComboBox,
+    QPlainTextEdit
 )
 from PyQt5 import uic
 from datetime import date
@@ -69,6 +70,9 @@ class UI(QMainWindow):
 
         self.txtFirstName = self.findChild(QLineEdit, "txtFirstName")
         self.txtLastName = self.findChild(QLineEdit, "txtLastName")
+        self.txtResults = self.findChild(QPlainTextEdit, "txtResults")
+        self.txtSearchLastName = self.findChild(QLineEdit, "txtSearchLastName")
+        self.txtSearchFirstName = self.findChild(QLineEdit, "txtSearchFirstName")
 
         self.lblBirth = self.findChild(QLabel, "lblBirth")
         self.lblDeath = self.findChild(QLabel, "lblDeath")
@@ -90,6 +94,8 @@ class UI(QMainWindow):
         self.btnEnterNewRecord.clicked.connect(self.enter_new_record)
         self.btnSaveNewRecord.clicked.connect(self.write_to_db)
         self.btnSearchRecords.clicked.connect(self.search_records)
+        self.txtSearchLastName.returnPressed.connect(self.search_lastname)
+        self.txtSearchFirstName.returnPressed.connect(self.search_firstname)
         self.actExit.triggered.connect(self.closeEvent)
         self.cboEvent.currentIndexChanged.connect(self.death_date_status)
 
@@ -143,11 +149,45 @@ class UI(QMainWindow):
         print("Ready to search??")
         self.stackedWidget.setCurrentWidget(self.Search)
     
+    def search_lastname(self):
+        print("Searching for last name")
+        # Open dB
+        conn = sqlite3.connect("Dates.db")
+        c = conn.cursor()
+        last_name_search = self.txtSearchLastName.text()
+        print(last_name_search)
+        #c.execute("SELECT * FROM people WHERE lastname = ?", (last_name_search,))
+        # LIKE and add '%' will allow for partial match and not capital sensitive
+        c.execute("SELECT * FROM people WHERE lastname LIKE (?) ", (last_name_search + '%',))
+        items = c.fetchall()
+        for item in items:
+            print(item)
+            self.txtResults.appendPlainText(str(item))
 
+        # Commit and Close dB
+        conn.commit()
+        conn.close()
 
     def enter_new_record(self):
         self.stackedWidget.setCurrentWidget(self.Entry)
         self.dtBirth.setVisible(True)
+
+    def search_firstname(self):
+        print("Searching for first name")
+        # Open dB
+        conn = sqlite3.connect("Dates.db")
+        c = conn.cursor()
+        first_name_search = self.txtSearchFirstName.text()
+        print(first_name_search)
+        #c.execute("SELECT * FROM people WHERE firstname = ?", (first_name_search,)) #  Comma need to make it a tuple
+        c.execute("SELECT * FROM people WHERE firstname LIKE (?) ", (first_name_search + '%',)) #  Comma need to make it a tuple
+        items = c.fetchall()
+        for item in items:
+            print(item)
+            self.txtResults.appendPlainText(str(item))
+         # Commit and Close dB
+        conn.commit()
+        conn.close()
 
 
     def write_to_db(self):
@@ -160,13 +200,14 @@ class UI(QMainWindow):
         print(eventType)
         birthDay = self.dtBirth.date().toString("MM-dd-yyyy")
         print(birthDay)
-        if self.cboEvent.currentText() == "Death":
+        if self.cboEvent.currentText() == "Death":  # If the event is death, the death date will be filled
             deathDay = self.dtDeath.date().toString("MM-dd-yyyy")
-        else:
+        else:  # If the event is not a death, the death date will not be visible and will return a blank foe dBase entry
             deathDay = "   "
         print(deathDay)
         if self.cboEvent.currentText() == "Anniversary":
             eventDay = self.dtEvent.date().toString("MM-dd-yyyy")
+            birthDay = "   "
         else:
             eventDay = "   "
         print(eventDay)
@@ -187,7 +228,10 @@ class UI(QMainWindow):
         self.txtLastName.clear()
         self.dtDeath.setVisible(False)
         self.dtEvent.setVisible(False)
+        self.dtBirth.setDate(date.today())
         self.stackedWidget.setCurrentWidget(self.Home)
+
+    
 
     def closeEvent(self, *args, **kwargs):
         # print("Program closed Successfully!")
